@@ -41,6 +41,8 @@
 body {
     font-family: 'EuropaGroteskSH', 'Inter', 'Helvetica Neue', sans-serif;
     font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     background-color: var(--color-bg-main);
     color: var(--color-text-main);
     line-height: 1.6;
