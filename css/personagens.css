@@ -3,7 +3,7 @@
 .personagens-container {
     display: grid;
     grid-template-columns: 1fr 1.5fr 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
     max-width: 1600px;
     margin: 0 auto;
     width: 92%;
@@ -25,6 +25,15 @@
     display: none; /* Chrome, Safari and Opera */
 }
 
+/* Remove scrollbars from the entire page as well to ensure a fully premium layout */
+body::-webkit-scrollbar {
+    display: none;
+}
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .universe-section {
     margin-bottom: 2rem;
 }
@@ -35,44 +44,76 @@
     font-size: 1.2rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    font-weight: 700;
 }
 
 .universe-section hr {
     border: none;
     height: 1px;
     background-color: var(--color-border);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .universe-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: 1rem;
     justify-content: flex-start;
 }
 
 .char-thumb-wrapper {
-    width: calc(33.333% - 0.67rem); /* 3 items per row with 1rem gap */
-    min-width: 80px;
     cursor: pointer;
     transition: var(--transition-smooth);
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    position: relative;
+    border-radius: var(--border-radius-minimal);
 }
 
 .char-thumb-wrapper:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.02);
     box-shadow: var(--shadow-hover);
 }
 
 .char-thumb-wrapper.active {
-    border: 2px solid var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary);
 }
 
 .char-thumb-wrapper img {
     width: 100%;
-    aspect-ratio: 1/1;
+    height: 100%;
     object-fit: cover;
     display: block;
-    border-radius: 0; /* No rounded corners */
+}
+
+/* Slot Vazio Premium */
+.char-thumb-wrapper.empty-slot {
+    border: 2px dashed var(--color-border);
+    background-color: rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    opacity: 0.6;
+}
+
+.char-thumb-wrapper.empty-slot:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+body.dark-mode .char-thumb-wrapper.empty-slot {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+body.dark-mode .char-thumb-wrapper.empty-slot:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.char-thumb-wrapper.empty-slot i {
+    font-size: 1.5rem;
+    color: var(--color-text-muted);
 }
 
 /* 🟩 DIV 2: Coluna de Preview (Centro) */
@@ -86,30 +127,73 @@
     border-radius: var(--border-radius-minimal);
     padding: 2rem;
     overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
 }
 
 .col-preview .btn-voltar {
     align-self: flex-start;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
 }
 
 .preview-img-container {
     width: 100%;
-    max-width: 400px; /* Optional, to constrain size */
+    max-width: 400px;
     aspect-ratio: 3/4;
     overflow: hidden;
     cursor: pointer;
     transition: var(--transition-smooth);
+    border-radius: var(--border-radius-minimal);
+    background-color: var(--color-bg-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
 }
 
 .preview-img-container:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
 
 .preview-img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
+}
+
+/* Fallback Premium (Sem Imagem) */
+.preview-img-container.sem-imagem {
+    background-color: var(--color-bg-main);
+    border: 1px solid var(--color-border);
+    cursor: default;
+}
+
+.preview-img-container.sem-imagem:hover {
+    transform: none;
+}
+
+.missing-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: 2rem;
+}
+
+.missing-image-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.missing-image-placeholder span {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 /* 🟦 DIV 3: Coluna de Informações (Direita) */
@@ -119,35 +203,78 @@
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius-minimal);
-    padding: 2rem;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
 }
 
 .col-info .char-name {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 700;
     color: var(--color-text-main);
     margin-bottom: 1rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
 }
 
 .col-info .char-desc {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--color-text-muted);
     margin-bottom: 2rem;
-    flex: 1; /* Allow description to take up available space */
+    line-height: 1.6;
 }
 
 .col-info .char-extra {
     margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.info-row strong {
+    color: var(--color-text-main);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+.info-row span {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    text-align: right;
+    max-width: 60%;
 }
 
 .col-info .btn-galeria {
-    align-self: flex-start;
+    align-self: stretch;
     margin-top: auto; /* Push button to bottom */
+    text-align: center;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--border-radius-minimal);
+    background-color: var(--color-primary);
+    color: white;
+    transition: var(--transition-smooth);
+}
+
+.col-info .btn-galeria:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(227, 42, 115, 0.3); /* Based on primary color */
 }
 
 /* SGLM-O: PREMIUM DARK MODE Overrides for this specific page */
 body.dark-mode .col-preview,
 body.dark-mode .col-info {
-    background-color: transparent;
+    background-color: var(--color-bg-main);
     border-color: var(--color-border);
 }
