@@ -563,32 +563,42 @@ function renderPersonagensView(db) {
             const grid = document.createElement('div');
             grid.className = 'universe-grid';
 
-            chars.forEach((char, index) => {
+            // Adiciona os personagens existentes
+            chars.forEach((char) => {
                 const thumb = document.createElement('div');
                 thumb.className = 'char-thumb-wrapper';
                 thumb.dataset.id = char.id;
-                thumb.innerHTML = `<img src="${char.pfp || char.portrait}" alt="${char.name}" onerror="this.onerror=null; this.src='assets/ui/placeholder.png';">`;
+                // INSTRUÇÃO PARA O USUÁRIO FINAL:
+                // Para que a imagem apareça aqui na moldura, faça o upload de uma imagem 1:1
+                // para o diretório: assets/characters/{id_do_personagem}/pfp.png
+                // Exemplo: assets/characters/aurora/pfp.png
+
+                // Fallback premium para imagens quebradas nas molduras (removendo a tag img)
+                thumb.innerHTML = `<img src="${char.pfp || `assets/characters/${char.id}/pfp.png`}" alt="${char.name}" onerror="this.onerror=null; this.parentNode.innerHTML='<div style=\\'width:100%; height:100%; display:flex; align-items:center; justify-content:center; background-color:var(--color-bg-main); color:var(--color-text-muted); font-size:0.8rem; text-align:center; padding:10px; border:1px solid var(--color-border); box-sizing:border-box;\\'>Sem Imagem</div>';">`;
 
                 thumb.addEventListener('click', () => selectCharacter(char, thumb));
                 grid.appendChild(thumb);
             });
 
+            // Preenche o resto do grid com "Slots Vazios" para manter um visual premium de landing page.
+            // O grid exibirá um mínimo de 12 slots (ou múltiplo de 3 para manter alinhamento em 3 colunas).
+            const MIN_SLOTS = 12;
+            const currentCount = chars.length;
+            const slotsToFill = currentCount < MIN_SLOTS ? MIN_SLOTS - currentCount : (3 - (currentCount % 3)) % 3;
+
+            for (let i = 0; i < slotsToFill; i++) {
+                const emptySlot = document.createElement('div');
+                emptySlot.className = 'char-thumb-wrapper empty-slot';
+                emptySlot.title = 'Slot Disponível - Adicione um novo personagem no database.js';
+                emptySlot.innerHTML = `<i class="fa-solid fa-plus"></i>`;
+                grid.appendChild(emptySlot);
+            }
+
             section.appendChild(grid);
             listagemEl.appendChild(section);
         }
 
-        if (Object.keys(universes).length === 1) {
-            const mockSection = document.createElement('div');
-            mockSection.className = 'universe-section';
-            mockSection.innerHTML = `
-                <h3>Outros Mundos (Em Breve)</h3>
-                <hr>
-                <div class="universe-grid">
-                    <p style="color: var(--color-text-muted); font-size: 0.9rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Novas personagens serão adicionadas em breve para expandir o universo e as conexões entre os mundos conhecidos.</p>
-                </div>
-            `;
-            listagemEl.appendChild(mockSection);
-        }
+        // Removido o mockSection "Outros Mundos (Em Breve)" pois agora focamos no grid principal de 12 itens
     }
 
     function selectCharacter(char, thumbEl) {
@@ -596,14 +606,34 @@ function renderPersonagensView(db) {
         if (thumbEl) thumbEl.classList.add('active');
 
         const previewImgContainer = document.getElementById('preview-img-container');
-        const previewImg = document.getElementById('preview-img');
-        if (previewImg) {
-            previewImg.src = char.portrait || char.pfp || 'assets/ui/placeholder.png';
-        }
         if (previewImgContainer) {
+            // Limpar o conteúdo atual da moldura central
+            previewImgContainer.innerHTML = '';
+            previewImgContainer.className = 'preview-img-container'; // Reseta as classes de fallback
             previewImgContainer.onclick = () => {
                 window.location.href = `character.html?id=${char.id}`;
             };
+
+            const img = document.createElement('img');
+            // INSTRUÇÃO PARA O USUÁRIO FINAL:
+            // A imagem central tem proporção 3:4. Faça o upload no diretório:
+            // assets/characters/{id_do_personagem}/portrait.png
+            img.src = char.portrait || char.pfp || `assets/characters/${char.id}/portrait.png`;
+            img.alt = `Preview de ${char.name}`;
+
+            // Fallback premium caso a imagem falhe ao carregar
+            img.onerror = function() {
+                previewImgContainer.classList.add('sem-imagem');
+                previewImgContainer.innerHTML = `
+                    <div class="missing-image-placeholder">
+                        <i class="fa-solid fa-image"></i>
+                        <span>Sem Imagem</span>
+                    </div>
+                `;
+                // Remove o click se não há imagem para evitar link falso, mas aqui podemos manter o acesso ao perfil
+            };
+
+            previewImgContainer.appendChild(img);
         }
 
         const infoName = document.getElementById('info-name');
@@ -616,8 +646,8 @@ function renderPersonagensView(db) {
 
         if (infoExtra) {
             infoExtra.innerHTML = `
-                ${char.age ? `<div style="margin-bottom: 0.5rem;"><strong>Idade:</strong> ${char.age}</div>` : ''}
-                ${char.medos && char.medos.length > 0 ? `<div style="margin-bottom: 0.5rem;"><strong>Medos:</strong> ${char.medos.join(', ')}</div>` : ''}
+                ${char.age ? `<div class="info-row"><strong>Idade</strong><span>${char.age}</span></div>` : ''}
+                ${char.medos && char.medos.length > 0 ? `<div class="info-row"><strong>Medos</strong><span>${char.medos.join(', ')}</span></div>` : ''}
             `;
         }
 
