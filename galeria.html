@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria - Projeto Universo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app-header"></div>
+
+    <main class="container">
+        <section class="gallery-header" style="text-align: center; margin-bottom: 4rem;">
+            <h1 style="color:var(--color-text-main); font-size:3rem; margin-top:2rem;">SGLM-O Acervo Visual</h1>
+            <p style="color: var(--color-text-muted); margin-top:1rem;">Gerenciamento de mídias offline. Explore os álbuns e selecione para visualizar fotos.</p>
+        </section>
+
+        <div class="gallery-toolbar minimal-panel" style="padding: 1.5rem 2rem; display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 4rem;">
+            
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 200px;">
+                <label style="color:var(--color-text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Raridade</label>
+                <select id="filter-rarity" class="toolbar-select" style="width: 100%;">
+                    <option value="all">Todas as Raridades</option>
+                    <option value="common">Comum</option>
+                    <option value="rare">Raro</option>
+                    <option value="epic">Épico</option>
+                    <option value="legendary">Lendário</option>
+                    <option value="aurora">Aurora (Única)</option>
+                </select>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 200px;">
+                <label style="color:var(--color-text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Filtro por Tag</label>
+                <select id="filter-tag" class="toolbar-select" style="width: 100%;">
+                    <option value="all">Todas as Tags</option>
+                    </select>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 200px;">
+                <label style="color:var(--color-text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Ordenação</label>
+                <select id="sort-albums" class="toolbar-select" style="width: 100%;">
+                    <option value="date-desc">Mais Recentes</option>
+                    <option value="date-asc">Mais Antigos</option>
+                    <option value="name-asc">Ordem Alfabética (A-Z)</option>
+                    <option value="name-desc">Ordem Alfabética (Z-A)</option>
+                </select>
+            </div>
+            
+        </div>
+
+        <section id="albums-container" class="albums-grid">
+            <!-- Dynamically populated by JS -->
+        </section>
+    </main>
+
+    <div id="app-footer"></div>
+
+    <script src="js/database.js"></script>
+    <script src="js/gallery-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

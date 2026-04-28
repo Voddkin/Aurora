@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Álbum - Projeto Universo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app-header"></div>
+
+    <main class="container">
+        <a href="galeria.html" style="display: inline-block; margin-bottom: 2rem; margin-top:2rem; color: var(--color-primary); text-decoration: none;">← Voltar para Galeria</a>
+
+        <section class="gallery-header" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem;">
+            <div>
+                <h1 id="album-title" style="color:var(--color-text-main); margin-bottom: 0.5rem;">Carregando Álbum...</h1>
+                <p id="album-desc" style="color: var(--color-text-muted);"></p>
+                
+                <div id="album-tags-container" style="margin-top: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    </div>
+
+                <div id="album-tags-editor" style="display: none; margin-top: 1rem; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <input type="text" id="album-tags-input" class="toolbar-select" placeholder="Ex: lore, oficial, spoiler" style="width: 300px; border: 1px solid var(--color-border) !important;">
+                    <button id="btn-save-tags" class="btn" style="padding: 0.8rem 1.5rem; font-size: 0.85rem;"><i class="fa-solid fa-floppy-disk"></i> Salvar Tags</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="gallery-toolbar minimal-panel" style="padding: 1.5rem 2rem; display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
+                <label style="color:var(--color-text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Ordenar Fotos</label>
+                <select id="sort-photos" class="toolbar-select">
+                    <option value="date-desc">Mais Recentes</option>
+                    <option value="date-asc">Mais Antigas</option>
+                    <option value="name-asc">Nome A-Z</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="gallery-toolbar">
+            <label style="color:var(--color-text-main);">Ordenar:</label>
+            <select id="sort-photos" class="toolbar-select">
+                <option value="date-desc">Mais Recentes</option>
+                <option value="date-asc">Mais Antigas</option>
+                <option value="name-asc">Nome A-Z</option>
+            </select>
+        </div>
+
+        <section id="photos-container" class="photos-grid">
+            <!-- Dynamically populated by JS -->
+        </section>
+    </main>
+
+    <!-- Advanced Photo Viewer Modal -->
+
+    <!-- SGLM-O Asset Inspection Modal -->
+    <div id="photo-modal" class="photo-modal" role="dialog" aria-modal="true">
+        <button class="modal-close" id="modal-close" aria-label="Fechar">×</button>
+        <button class="modal-nav prev" id="modal-prev" aria-label="Anterior">‹</button>
+        <button class="modal-nav next" id="modal-next" aria-label="Próximo">›</button>
+
+        <div class="modal-split">
+            <div class="modal-img-container">
+                <img id="modal-img" class="modal-img" src="" alt="View">
+            </div>
+            <div class="modal-sidebar">
+                <h2 id="modal-title" style="margin-top:0;">Photo Name</h2>
+                <div class="modal-meta" style="color:var(--color-text-muted); font-size:0.9rem; margin-bottom: 2rem;">
+                    <span id="modal-filesize"></span> • <span id="modal-date"></span>
+                </div>
+
+                <div id="modal-desc" style="line-height:1.6; margin-bottom: 2rem;">
+                    <!-- Description injected here via parseLoreText -->
+                </div>
+
+                <button id="modal-set-cover" class="btn" style="width:100%;"><i class="fa-solid fa-star"></i> Definir como Capa</button>
+
+                <div class="modal-controls" style="display:flex; justify-content:center; gap:1rem; margin-top:2rem;">
+                    <button id="modal-zoom-out" class="btn btn-outline" style="padding:0.5rem 1rem;">- Zoom</button>
+                    <button id="modal-zoom-in" class="btn btn-outline" style="padding:0.5rem 1rem;">+ Zoom</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="btn-edit-mode" class="fab-edit" title="Modo de Edição"><i class="fa-solid fa-pen"></i></button>
+
+    <div id="app-footer"></div>
+
+    <script src="js/database.js"></script>
+    <script src="js/gallery-data.js"></script>
+    <script src="vendor/Sortable.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

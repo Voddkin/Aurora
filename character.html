@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Personagem</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Global Header -->
+    <div id="app-header"></div>
+
+    <!-- Header Dinâmico (Banner) -->
+    <header class="char-header" id="char-header">
+        <!-- Background injected via main.js -->
+    </header>
+
+    <main class="dossier-container">
+
+        <div class="text-center">
+            <a href="index.html" class="btn btn-outline">&larr; Voltar ao Panteão</a>
+        </div>
+
+        <h1 class="dossier-title" id="char-name">Nome do Personagem</h1>
+
+        <!-- Content Injected via main.js -->
+        <div id="dossier-content"></div>
+
+        <!-- Galeria Dinâmica -->
+        <section class="dossier-section" style="padding-bottom: 0;">
+            <h2>Galeria</h2>
+            <div id="gallery-grid" class="gallery-grid">
+                <!-- Dynamically injected via main.js -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <div id="app-footer"></div>
+
+    <!-- Scripts -->
+    <script src="js/database.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

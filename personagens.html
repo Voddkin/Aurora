@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personagens - Projeto Universo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/personagens.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Global Header -->
+    <div id="app-header"></div>
+
+    <main class="container" style="max-width: 100%; padding: 0;">
+        <div class="personagens-container">
+
+            <!-- 🟥 DIV 1: Coluna de Listagem (Esquerda) -->
+            <div class="col-listagem" id="col-listagem">
+                <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- 🟩 DIV 2: Coluna de Preview (Centro) -->
+            <div class="col-preview">
+                <button class="btn btn-outline btn-voltar" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
+                <div class="preview-img-container" id="preview-img-container">
+                    <img src="assets/ui/placeholder.png" id="preview-img" alt="Preview Personagem">
+                </div>
+            </div>
+
+            <!-- 🟦 DIV 3: Coluna de Informações (Direita) -->
+            <div class="col-info">
+                <h1 class="char-name" id="info-name">Selecione uma Personagem</h1>
+                <p class="char-desc" id="info-desc">Aguardando seleção...</p>
+                <div class="char-extra" id="info-extra">
+                    <!-- Informações técnicas extras aqui -->
+                </div>
+                <a href="#" class="btn btn-galeria" id="btn-ver-galeria">Ver Galeria</a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <div id="app-footer"></div>
+
+    <!-- Scripts -->
+    <script src="js/database.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

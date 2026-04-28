@@ -1,0 +1,153 @@
+/* personagens.css */
+
+.personagens-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 92%;
+    padding: 3rem 0;
+    height: calc(100vh - 150px); /* Adjust to fit below header */
+    overflow: hidden;
+}
+
+/* 🟥 DIV 1: Coluna de Listagem (Esquerda) */
+.col-listagem {
+    overflow-y: auto;
+    padding-right: 1rem;
+    /* Invisible scrollbar */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.col-listagem::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+
+.universe-section {
+    margin-bottom: 2rem;
+}
+
+.universe-section h3 {
+    margin-bottom: 1rem;
+    color: var(--color-text-main);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.universe-section hr {
+    border: none;
+    height: 1px;
+    background-color: var(--color-border);
+    margin-bottom: 1rem;
+}
+
+.universe-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
+.char-thumb-wrapper {
+    width: calc(33.333% - 0.67rem); /* 3 items per row with 1rem gap */
+    min-width: 80px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.char-thumb-wrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.char-thumb-wrapper.active {
+    border: 2px solid var(--color-primary);
+}
+
+.char-thumb-wrapper img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    display: block;
+    border-radius: 0; /* No rounded corners */
+}
+
+/* 🟩 DIV 2: Coluna de Preview (Centro) */
+.col-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-minimal);
+    padding: 2rem;
+    overflow: hidden;
+}
+
+.col-preview .btn-voltar {
+    align-self: flex-start;
+    margin-bottom: 1rem;
+}
+
+.preview-img-container {
+    width: 100%;
+    max-width: 400px; /* Optional, to constrain size */
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.preview-img-container:hover {
+    transform: scale(1.02);
+}
+
+.preview-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 🟦 DIV 3: Coluna de Informações (Direita) */
+.col-info {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-minimal);
+    padding: 2rem;
+}
+
+.col-info .char-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 1rem;
+}
+
+.col-info .char-desc {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    flex: 1; /* Allow description to take up available space */
+}
+
+.col-info .char-extra {
+    margin-bottom: 2rem;
+}
+
+.col-info .btn-galeria {
+    align-self: flex-start;
+    margin-top: auto; /* Push button to bottom */
+}
+
+/* SGLM-O: PREMIUM DARK MODE Overrides for this specific page */
+body.dark-mode .col-preview,
+body.dark-mode .col-info {
+    background-color: transparent;
+    border-color: var(--color-border);
+}

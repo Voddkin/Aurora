@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor - Projeto Universo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0A0A0A; color: #FFFFFF; }
+        .global-header { border-bottom: 1px solid #222; }
+        .logo, .logo span { color: #FFFFFF; }
+        nav a { color: #AAAAAA; }
+        nav a:hover { color: #FFFFFF; }
+        .dropdown span { color: #AAAAAA; }
+
+        .manga-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            padding-bottom: 10rem;
+            transition: max-width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-header"></div>
+
+    <main>
+        <button id="reader-prev" class="page-nav prev">‹</button>
+        <div id="manga-container" class="manga-container">
+            <!-- Dynamically populated -->
+        </div>
+        <button id="reader-next" class="page-nav next">›</button>
+
+        <div class="reader-dock">
+            <button id="btn-zoom-out" class="dock-btn" title="Diminuir Zoom">– Z</button>
+            <button id="btn-zoom-in" class="dock-btn" title="Aumentar Zoom">+ Z</button>
+            <div class="dock-divider"></div>
+            <button id="btn-mode-cascade" class="dock-btn active" title="Modo Cascata">↕ Cascata</button>
+            <button id="btn-mode-single" class="dock-btn" title="Modo Página Única">◫ Única</button>
+        </div>
+    </main>
+
+    <script src="js/database.js"></script>
+    <script src="js/gallery-data.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMangaView(window.UniverseDB);
+
+            // Advanced Reader Logic
+            const container = document.getElementById('manga-container');
+            const btnZoomIn = document.getElementById('btn-zoom-in');
+            const btnZoomOut = document.getElementById('btn-zoom-out');
+            const btnModeCascade = document.getElementById('btn-mode-cascade');
+            const btnModeSingle = document.getElementById('btn-mode-single');
+            const btnPrev = document.getElementById('reader-prev');
+            const btnNext = document.getElementById('reader-next');
+
+            let currentZoom = 800; // default max-width
+            let isSinglePageMode = false;
+            let currentPageIndex = 0;
+            let totalPages = 0;
+
+            // Wait a bit for images to be generated
+            setTimeout(() => {
+                const pages = container.querySelectorAll('.manga-page');
+                totalPages = pages.length;
+                if(totalPages > 0) {
+                    pages[0].classList.add('active');
+                }
+                updateReaderView();
+            }, 100);
+
+            function updateReaderView() {
+                if (isSinglePageMode) {
+                    document.body.classList.add('single-page-mode');
+                    btnModeSingle.classList.add('active');
+                    btnModeCascade.classList.remove('active');
+                    container.style.maxWidth = '100%';
+
+                    const pages = container.querySelectorAll('.manga-page');
+                    pages.forEach((p, idx) => {
+                        if (idx === currentPageIndex) p.classList.add('active');
+                        else p.classList.remove('active');
+                    });
+
+                    if (btnPrev) btnPrev.style.display = currentPageIndex > 0 ? 'block' : 'none';
+                    if (btnNext) btnNext.style.display = currentPageIndex < totalPages - 1 ? 'block' : 'none';
+                } else {
+                    document.body.classList.remove('single-page-mode');
+                    btnModeCascade.classList.add('active');
+                    btnModeSingle.classList.remove('active');
+                    container.style.maxWidth = currentZoom + 'px';
+
+                    if (btnPrev) btnPrev.style.display = 'none';
+                    if (btnNext) btnNext.style.display = 'none';
+                }
+            }
+
+            if (btnZoomIn) {
+                btnZoomIn.addEventListener('click', () => {
+                    currentZoom += 200;
+                    if(!isSinglePageMode) updateReaderView();
+                });
+            }
+
+            if (btnZoomOut) {
+                btnZoomOut.addEventListener('click', () => {
+                    if (currentZoom > 400) currentZoom -= 200;
+                    if(!isSinglePageMode) updateReaderView();
+                });
+            }
+
+            if (btnModeCascade) {
+                btnModeCascade.addEventListener('click', () => {
+                    isSinglePageMode = false;
+                    updateReaderView();
+                    const pages = container.querySelectorAll('.manga-page');
+                    if(pages[currentPageIndex]) pages[currentPageIndex].scrollIntoView();
+                });
+            }
+
+            if (btnModeSingle) {
+                btnModeSingle.addEventListener('click', () => {
+                    isSinglePageMode = true;
+                    updateReaderView();
+                    window.scrollTo(0, 0);
+                });
+            }
+
+            if (btnPrev) {
+                btnPrev.addEventListener('click', () => {
+                    if (currentPageIndex > 0) {
+                        currentPageIndex--;
+                        updateReaderView();
+                    }
+                });
+            }
+
+            if (btnNext) {
+                btnNext.addEventListener('click', () => {
+                    if (currentPageIndex < totalPages - 1) {
+                        currentPageIndex++;
+                        updateReaderView();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
