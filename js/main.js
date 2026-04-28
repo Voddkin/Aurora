@@ -640,11 +640,13 @@ function renderPersonagensView(db) {
         const infoDesc = document.getElementById('info-desc');
         const infoExtra = document.getElementById('info-extra');
         const btnGaleria = document.getElementById('btn-ver-galeria');
+        const btnFicha = document.getElementById('btn-ver-ficha');
 
         if (infoName) infoName.textContent = char.name;
         if (infoDesc) infoDesc.textContent = char.personality || char.appearance || 'Descrição não disponível.';
 
         if (infoExtra) {
+            // Updated to support badges/pills via CSS styling
             infoExtra.innerHTML = `
                 ${char.age ? `<div class="info-row"><strong>Idade</strong><span>${char.age}</span></div>` : ''}
                 ${char.medos && char.medos.length > 0 ? `<div class="info-row"><strong>Medos</strong><span>${char.medos.join(', ')}</span></div>` : ''}
@@ -654,6 +656,20 @@ function renderPersonagensView(db) {
         if (btnGaleria) {
             const albumId = (db.ALBUMS || []).find(a => a.characterId === char.id || a.title.toLowerCase().includes(char.name.toLowerCase()))?.id || char.id;
             btnGaleria.href = `album.html?id=${albumId}`;
+        }
+
+        if (btnFicha) {
+            if (char.linkFicha) {
+                btnFicha.href = char.linkFicha;
+                btnFicha.classList.remove('disabled');
+                btnFicha.removeAttribute('disabled');
+                btnFicha.style.display = 'block'; // Ensure it's visible
+            } else {
+                btnFicha.removeAttribute('href');
+                btnFicha.classList.add('disabled');
+                btnFicha.setAttribute('disabled', 'true');
+                // You can also change to display = 'none' if preferred, but disabled looks better
+            }
         }
     }
 

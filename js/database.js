@@ -50,7 +50,8 @@ window.UniverseDB = {
                 }
             ],
             pfp: 'assets/characters/aurora/pfp.png', // Transparent PNG for Quote Pop-out
-            portrait: 'assets/characters/aurora/portrait.png' // General portrait
+            portrait: 'assets/characters/aurora/portrait.png', // General portrait
+            linkFicha: 'character.html?id=aurora'
         }
     ],
     SEASONS: [
