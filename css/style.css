@@ -13,9 +13,22 @@
 
 @font-face {
     font-family: 'EuropaGroteskSH';
-    src: url('../fonts/EuropaGroteskSH.woff2') format('woff2'),
-         url('../fonts/EuropaGroteskSH.ttf') format('truetype');
-    font-weight: normal;
+    src: url('../assets/fonts/EUROPAGROTESKSH-MED.OTF') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EuropaGroteskSH';
+    src: url('../assets/fonts/EUROPA GROTESK SH DEMBOL.TTF') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'EuropaGroteskSH';
+    src: url('../assets/fonts/EUROPA-GROTESK-SH-BOLD.OTF') format('opentype');
+    font-weight: 700;
     font-style: normal;
 }
 
@@ -27,6 +40,7 @@
 
 body {
     font-family: 'EuropaGroteskSH', 'Inter', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
     background-color: var(--color-bg-main);
     color: var(--color-text-main);
     line-height: 1.6;
@@ -50,6 +64,7 @@ h1, h2, h3, h4 {
     color: var(--color-text-main);
     font-weight: 700;
     line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
 h1 {
@@ -101,7 +116,7 @@ p {
 }
 
 .global-header .nav-links a {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -470,6 +485,8 @@ p {
     margin-top: 6rem;
     margin-bottom: 3rem;
     font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--color-border);
     text-align: center;
@@ -547,6 +564,8 @@ p {
 
 .dossier-title {
     font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
     text-align: center;
     color: var(--color-text-main);
     margin-bottom: 4rem;
@@ -725,11 +744,11 @@ body.dark-mode img:hover {
     color: #FFFFFF !important;
     border-radius: 8px;
     font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     transition: var(--transition-smooth);
     border: none;
     cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
 }
 
 .btn:hover {
@@ -1469,4 +1488,11 @@ body.dark-mode .lore-popover {
     padding: 2rem;
     text-align: center;
     color: var(--color-text-muted);
+}
+
+
+/* SGLM-O Character Name */
+.char-name {
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
