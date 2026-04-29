@@ -38,6 +38,98 @@
     box-sizing: border-box;
 }
 
+/* SGLM-O PREMIUM SCROLLBAR & CURSOR */
+@media (min-width: 1025px) {
+    body, a, button, .bento-card, .char-thumb-wrapper, .mosaic-item {
+        cursor: none !important;
+    }
+
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        transition: background 0.3s ease;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary);
+    }
+    body.light-mode ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+    }
+    body.light-mode ::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary);
+    }
+}
+
+/* Custom Interactive Cursor Styles */
+.cursor-dot, .cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 999999;
+    display: none;
+}
+
+@media (min-width: 1025px) {
+    .cursor-dot, .cursor-outline {
+        display: block;
+    }
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-primary);
+}
+
+.cursor-outline {
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: transparent;
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+                width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                background-color 0.3s ease;
+}
+
+body.dark-mode .cursor-outline {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.light-mode .cursor-outline {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.cursor-outline.cursor-hover {
+    width: 50px;
+    height: 50px;
+    border-color: var(--color-primary);
+    background-color: rgba(227, 42, 115, 0.05);
+    backdrop-filter: blur(2px);
+}
+
+/* SGLM-O PAGE TRANSITIONS */
+body:not(.page-loaded) main,
+body:not(.page-loaded) .global-header {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+main, .global-header {
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 body {
     font-family: 'EuropaGroteskSH', 'Inter', 'Helvetica Neue', sans-serif;
     font-weight: 500;
@@ -677,6 +769,18 @@ body.dark-mode {
     --color-text-muted: #A1A1AA; /* Cinza prateado para subtítulos */
     --color-border: #27272A; /* Borda quase invisível, só para dar volume */
     --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.6); /* Sombra mais densa */
+}
+
+/* SGLM-O CINEMATIC NOISE */
+body.dark-mode::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    pointer-events: none;
+    opacity: 0.03;
+    mix-blend-mode: overlay;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');
 }
 
 body.dark-mode .mega-hero .content-overlay {
