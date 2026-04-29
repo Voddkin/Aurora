@@ -784,14 +784,14 @@ function renderAlbumPage(db) {
             photosContainer.innerHTML = '';
             photosToRender.forEach((photo, index) => {
                 const card = document.createElement('div');
-                card.className = 'photo-card minimal-panel';
+                card.className = 'photo-card-premium';
                 card.dataset.id = photo.id;
 
                 const imgPath = photo.filename.startsWith("assets/") ? photo.filename : (photo.filename.startsWith("gallery/") ? `assets/${photo.filename}` : `assets/ui/${photo.filename}`);
                 const isCover = album.coverPhotoId === photo.id;
 
                 card.innerHTML = `
-                    <div class="drag-handle">☰</div>
+                    <div class="drag-handle" style="position: absolute; top: 10px; left: 10px; z-index: 10; color: #FFF; background: rgba(0,0,0,0.5); padding: 0.5rem; border-radius: 8px; backdrop-filter: blur(4px); display: none;"><i class="fa-solid fa-grip-vertical"></i></div>
                     <i class="cover-star ${isCover ? 'fa-solid fa-star is-cover' : 'fa-regular fa-star'}" title="Definir como Capa"></i>
                     <div class="img-container" style="cursor: pointer; padding: 0.5rem;" onclick="openModal(${index})">
                         <img src="${imgPath}" class="img-fit" alt="${photo.name}" onerror="this.onerror=null; this.parentElement.style.display='none';">
@@ -830,9 +830,12 @@ function renderAlbumPage(db) {
                 if (isEditMode) {
                     btnEdit.classList.add('active');
                     photosContainer.classList.add('edit-mode-active');
+                    document.querySelectorAll('.drag-handle').forEach(el => el.style.display = 'block');
+                    if (typeof window.showToast === 'function') window.showToast('Modo de Edição Ativo. Arraste para reordenar.', 'var(--color-primary)');
                     if (typeof Sortable !== 'undefined') {
                         sortableInstance = new Sortable(photosContainer, {
-                            animation: 150,
+                            animation: 300,
+                            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
                             handle: '.drag-handle',
                             ghostClass: 'sortable-ghost',
                             onEnd: () => {
@@ -870,6 +873,7 @@ function renderAlbumPage(db) {
                 } else {
                     btnEdit.classList.remove('active');
                     photosContainer.classList.remove('edit-mode-active');
+                    document.querySelectorAll('.drag-handle').forEach(el => el.style.display = 'none');
                     if (sortableInstance) sortableInstance.destroy();
                     const copyBtn = document.getElementById('btn-copy-json');
                     if (copyBtn) copyBtn.remove();
@@ -878,6 +882,7 @@ function renderAlbumPage(db) {
         }
 
         const modal = document.getElementById('photo-modal');
+        if(modal) modal.classList.remove('photo-modal'); // remove old class if exist
         const modalImg = document.getElementById('modal-img');
         const modalTitle = document.getElementById('modal-title');
         let currentIndex = 0;

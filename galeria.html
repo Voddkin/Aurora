@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeria - Projeto Universo</title>
+    <title>SGLM-O: Galeria Premium</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div id="app-header"></div>
 
-    <main class="container">
-        <section class="gallery-header" style="text-align: center; margin-bottom: 4rem;">
-            <h1 style="color:var(--color-text-main); font-size:3rem; margin-top:2rem;">SGLM-O Acervo Visual</h1>
-            <p style="color: var(--color-text-muted); margin-top:1rem;">Gerenciamento de mídias offline. Explore os álbuns e selecione para visualizar fotos.</p>
+    <main class="container gallery-main-container">
+        <section class="gallery-header-premium">
+            <div class="gallery-header-content reveal">
+                <h1>SGLM-O Acervo Visual</h1>
+                <p>Gerenciamento de mídias offline em alta definição. Selecione um ciclo para inspecionar.</p>
+            </div>
         </section>
 
-        <div class="gallery-toolbar minimal-panel" style="padding: 1.5rem 2rem; display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 4rem;">
-            
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 200px;">
-                <label style="color:var(--color-text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Raridade</label>
-                <select id="filter-rarity" class="toolbar-select" style="width: 100%;">
+        <!-- Admin / Filter Toolbar -->
+        <div class="gallery-toolbar-premium glass-panel reveal">
+            <div class="toolbar-group">
+                <label>Raridade</label>
+                <select id="filter-rarity" class="toolbar-select">
                     <option value="all">Todas as Raridades</option>
                     <option value="common">Comum</option>
                     <option value="rare">Raro</option>
@@ -30,27 +32,30 @@
                 </select>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 200px;">
-                <label style="color:var(--color-text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Filtro por Tag</label>
-                <select id="filter-tag" class="toolbar-select" style="width: 100%;">
+            <div class="toolbar-group">
+                <label>Filtro por Tag</label>
+                <select id="filter-tag" class="toolbar-select">
                     <option value="all">Todas as Tags</option>
-                    </select>
+                </select>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; flex: 1; min-width: 200px;">
-                <label style="color:var(--color-text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Ordenação</label>
-                <select id="sort-albums" class="toolbar-select" style="width: 100%;">
+            <div class="toolbar-group">
+                <label>Ordenação</label>
+                <select id="sort-albums" class="toolbar-select">
                     <option value="date-desc">Mais Recentes</option>
                     <option value="date-asc">Mais Antigos</option>
                     <option value="name-asc">Ordem Alfabética (A-Z)</option>
                     <option value="name-desc">Ordem Alfabética (Z-A)</option>
                 </select>
             </div>
-            
         </div>
 
-        <section id="albums-container" class="albums-grid">
+        <!-- The Vitrine -->
+        <section id="albums-container" class="gallery-grid-premium">
             <!-- Dynamically populated by JS -->
+            <div class="skeleton-album shimmer"></div>
+            <div class="skeleton-album shimmer"></div>
+            <div class="skeleton-album shimmer"></div>
         </section>
     </main>
 
