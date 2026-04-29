@@ -25,10 +25,7 @@
     display: none; /* Chrome, Safari and Opera */
 }
 
-/* Remove scrollbars from the entire page as well to ensure a fully premium layout */
-body::-webkit-scrollbar {
-    display: none;
-}
+/* Scrollbar handled globally in style.css */
 body {
     -ms-overflow-style: none;
     scrollbar-width: none;

@@ -1041,8 +1041,70 @@ class Router {
     }
 }
 
+// --- CUSTOM CURSOR ---
+function initCustomCursor() {
+    if (window.innerWidth < 1025) return;
+
+    const cursorDot = document.createElement('div');
+    cursorDot.className = 'cursor-dot';
+    const cursorOutline = document.createElement('div');
+    cursorOutline.className = 'cursor-outline';
+
+    document.body.appendChild(cursorDot);
+    document.body.appendChild(cursorOutline);
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let outlineX = mouseX;
+    let outlineY = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+    });
+
+    function animateOutline() {
+        // Spring easing effect
+        let dx = mouseX - outlineX;
+        let dy = mouseY - outlineY;
+        outlineX += dx * 0.15;
+        outlineY += dy * 0.15;
+
+        cursorOutline.style.transform = `translate(calc(${outlineX}px - 50%), calc(${outlineY}px - 50%))`;
+        requestAnimationFrame(animateOutline);
+    }
+    requestAnimationFrame(animateOutline);
+
+    // Interactive Hover State
+    const addHoverToElements = () => {
+        const interactiveElements = document.querySelectorAll('a, button, .bento-card, .char-thumb-wrapper, .mosaic-item');
+        interactiveElements.forEach(el => {
+            // Prevent multiple bindings if re-injected
+            if (el.dataset.cursorBound) return;
+            el.dataset.cursorBound = "true";
+
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('cursor-hover'));
+        });
+    };
+
+    // Initial bind
+    addHoverToElements();
+
+    // Re-bind on potential DOM changes (like searching or opening modals)
+    const observer = new MutationObserver(() => addHoverToElements());
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
 // Bootstrap
 document.addEventListener('DOMContentLoaded', () => {
     const app = new Router();
     app.init();
+    initCustomCursor();
+
+    // Page Transitions
+    requestAnimationFrame(() => {
+        document.body.classList.add('page-loaded');
+    });
 });
