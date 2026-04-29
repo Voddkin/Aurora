@@ -3,57 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto Universo</title>
+    <title>SGLM-O: Projeto Aurora</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
     <!-- Global Header -->
-    <div id="app-header"></div>
+    <div id="app-header" style="position: absolute; width: 100%; z-index: 10000; background: transparent; border: none;"></div>
 
-    <main class="container">
-        <!-- THE MEGA HOME BENTO GRID -->
-        <div class="bento-grid">
-
-            <!-- L1: Hero Banner (Span 12) -->
-            <div class="bento-item mega-hero" id="home-hero">
-                <!-- Dynamically injected via main.js -->
+    <main class="home-main">
+        <!-- 1. THE HERO SECTION -->
+        <section class="hero hero-premium">
+            <div class="hero-bg-glow"></div>
+            <div class="hero-content reveal">
+                <h1 class="hero-title">SGLM-O: O CÓDICE</h1>
+                <p class="hero-subtitle">Sistema de Gestão de Lore e Mídias Offline. O ápice do design imersivo.</p>
+                <button class="btn btn-premium" onclick="document.getElementById('bento-modules').scrollIntoView({behavior: 'smooth'})">
+                    Acessar Sistema
+                </button>
             </div>
-
-            <!-- L2: Quote Engine (Span 12) -->
-            <div class="quote-engine-block" id="home-quote">
-                <!-- Dynamically injected via main.js -->
+            <div class="scroll-indicator">
+                <i class="fa-solid fa-chevron-down"></i>
             </div>
+        </section>
 
-            <!-- L3: Categories / Secondary Characters (Span 12) -->
-            <div class="bento-item categories-block" id="home-categories">
-                <!-- Dynamically injected via main.js -->
+        <!-- 2. TYPOGRAPHY MARQUEE -->
+        <div class="marquee-premium reveal">
+            <div class="marquee-content">
+                <span>LORE // PERSONAGENS // GALERIAS // ARQUIVOS CONFIDENCIAIS //</span>
+                <span>LORE // PERSONAGENS // GALERIAS // ARQUIVOS CONFIDENCIAIS //</span>
+                <span>LORE // PERSONAGENS // GALERIAS // ARQUIVOS CONFIDENCIAIS //</span>
             </div>
-
-            <!-- L4: Latest Release (Span 6) -->
-            <div class="bento-item mega-release minimal-panel" id="home-latest">
-                <!-- Dynamically injected via main.js -->
-            </div>
-
-            <!-- L4: Creator Status (Span 6) -->
-            <div class="bento-item creator-status-card minimal-panel" id="home-status">
-                <!-- Dynamically injected via main.js -->
-            </div>
-
-            <!-- L5: Gallery Mosaic (Span 12) -->
-            <div class="bento-item gallery-mosaic" id="home-gallery">
-                <!-- Dynamically injected via main.js -->
-            </div>
-
         </div>
 
-        <!-- THE PANTHEON (Hub de Personagens) -->
-        <h2 id="panteao" class="section-title">O Panteão</h2>
-        <div id="characters-grid" class="characters-grid">
-            <!-- Dynamically injected via main.js -->
-        </div>
+        <!-- 3. THE BENTO GRID -->
+        <section id="bento-modules" class="bento-container container">
+            <div class="bento-grid-modern">
+                <!-- Cards (Dynamically injected via main.js or hardcoded based on request) -->
+                <!-- LORE / LER AGORA -->
+                <a href="manga-reader.html" class="bento-card glass-panel bento-large reveal">
+                    <div class="bento-inner">
+                        <i class="fa-solid fa-book-open"></i>
+                        <h3>Acervo de Lore</h3>
+                        <p>Acesse as crônicas e temporadas registradas no Códice.</p>
+                    </div>
+                </a>
 
+                <!-- PERSONAGENS -->
+                <a href="personagens.html" class="bento-card glass-panel bento-medium reveal">
+                    <div class="bento-inner">
+                        <i class="fa-solid fa-users"></i>
+                        <h3>Entidades</h3>
+                        <p>Registros detalhados de personagens.</p>
+                    </div>
+                </a>
+
+                <!-- GALERIA -->
+                <a href="galeria.html" class="bento-card glass-panel bento-medium reveal">
+                    <div class="bento-inner">
+                        <i class="fa-solid fa-images"></i>
+                        <h3>Mídias Visuais</h3>
+                        <p>Galeria de evidências e artes conceituais.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 4. SYSTEM STATUS / ESTATÍSTICAS -->
+        <section class="system-stats-premium container reveal">
+            <div class="stats-row" id="home-stats">
+                <!-- Dynamically injected via main.js -->
+            </div>
+        </section>
     </main>
 
     <!-- Global Footer -->

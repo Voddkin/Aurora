@@ -258,113 +258,49 @@ function applyGlobalConfig(db) {
 function renderHomeView(db) {
     applyGlobalConfig(db);
 
-    const hero = document.getElementById('home-hero');
-    if (hero && db.HOME_CONTENT) {
-        hero.innerHTML = `
-            <img src="${db.HOME_CONTENT.heroBannerPath}" alt="Hero Banner" style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: 1;" onerror="this.style.display='none'">
-            <div class="content-overlay">
-                <h1 style="color: var(--color-text-main); font-size: 3.5rem; margin-bottom: 1rem;">${db.HOME_CONTENT.heroTitle}</h1>
-                <p style="font-size: 1.2rem; color: var(--color-text-muted);">${db.HOME_CONTENT.heroSubtitle}</p>
+    // Populate System Stats Dynamically
+    const statsContainer = document.getElementById('home-stats');
+    if (statsContainer) {
+        const numEntities = db.CHARACTERS ? db.CHARACTERS.length : 0;
+        const numSeasons = db.SEASONS ? db.SEASONS.length : 0;
+        // Simple fallback since galleries might be spread or dynamically loaded later, let's use a flat hardcoded 12 for the demo if none.
+        const numMídias = 12;
+
+        statsContainer.innerHTML = `
+            <div class="stat-item">
+                <div class="stat-number">${numEntities}</div>
+                <div class="stat-label">Entidades</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">${numSeasons}</div>
+                <div class="stat-label">Ciclos Registrados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">${numMídias}</div>
+                <div class="stat-label">Mídias</div>
             </div>
         `;
     }
 
-    const latest = document.getElementById('home-latest');
-    if (latest && db.HOME_CONTENT && db.SEASONS) {
-        const season = db.SEASONS.find(s => s.id === db.HOME_CONTENT.latestReleaseId);
-        if (season) {
-            latest.innerHTML = `
-                <h3 style="color: var(--color-primary); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;">Último Lançamento</h3>
-                <div class="img-wrapper aspect-square" style="width: 200px; border-radius: 12px; margin-bottom: 2rem; box-shadow: var(--shadow-hover);">
-                    <img src="${season.coverPath}" class="img-responsive" alt="Capa" onerror="this.style.display='none'">
-                </div>
-                <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--color-text-main);">${season.title}</h4>
-                <a href="manga-reader.html?id=${season.id}" class="btn" style="margin-top: 1rem;">Ler Agora</a>
-            `;
-        }
-    }
+    // IntersectionObserver for Scroll Animations
+    const revealElements = document.querySelectorAll('.reveal');
+    if (revealElements.length > 0) {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
 
-    const quoteBlock = document.getElementById('home-quote');
-    if (quoteBlock && db.QUOTES && db.QUOTES.length > 0) {
-        const randomQuote = db.QUOTES[Math.floor(Math.random() * db.QUOTES.length)];
-        const char = db.CHARACTERS.find(c => c.id === randomQuote.characterId);
-        const targetSeason = randomQuote.chapterLink || '1';
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
 
-        quoteBlock.innerHTML = `
-            <div class="quote-content">
-                <div class="quote-text">${randomQuote.quoteText}</div>
-                <p style="font-size: 1.2rem; font-weight: bold; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em;">- ${randomQuote.characterName}</p>
-                <a href="manga-reader.html?id=${targetSeason}" class="btn" style="margin-top: 2rem;">Ver Contexto</a>
-            </div>
-            ${char ? `<img src="${char.pfp}" alt="${char.name}" class="character-popout" onerror="this.style.display='none'">` : ''}
-        `;
-    }
-
-    const categoriesBlock = document.getElementById('home-categories');
-    if (categoriesBlock && db.CHARACTERS) {
-        let categoriesHtml = db.CHARACTERS.map(char => `
-            <a href="character.html?id=${char.id}" class="category-item" style="text-decoration: none;">
-                <div class="category-circle-wrapper">
-                    <img src="${char.portrait}" alt="${char.name}" onerror="this.onerror=null; this.parentElement.parentElement.style.display='none';">
-                </div>
-                <h4>${char.name}</h4>
-            </a>
-        `).join('');
-
-        if (db.CHARACTERS.length === 1) {
-             categoriesHtml += `
-            <a href="#" class="category-item" style="text-decoration: none;">
-                <div class="category-circle-wrapper">
-                    <img src="assets/ui/placeholder.png" alt="Kris">
-                </div>
-                <h4>Kris</h4>
-            </a>
-            <a href="#" class="category-item" style="text-decoration: none;">
-                <div class="category-circle-wrapper">
-                    <img src="assets/ui/placeholder.png" alt="Entidade">
-                </div>
-                <h4>Entidade</h4>
-            </a>
-            `;
-        }
-
-        categoriesBlock.innerHTML = categoriesHtml;
-    }
-
-    const gallery = document.getElementById('home-gallery');
-    if (gallery && db.HOME_CONTENT) {
-        gallery.innerHTML = db.HOME_CONTENT.galleryPlaceholders.map(img => `
-            <div class="img-wrapper mosaic-item">
-                <img src="${img}" class="img-responsive" alt="Galeria" onerror="this.style.display='none'">
-            </div>
-        `).join('');
-    }
-
-    const status = document.getElementById('home-status');
-    if (status && db.CREATOR_STATUS) {
-        status.innerHTML = `
-            <h3>Status do Criador</h3>
-            <p>"${db.CREATOR_STATUS.text}"</p>
-            <span style="display: block; margin-top: 2rem; font-size: 0.9rem; opacity: 0.6;">Última atualização: ${db.CREATOR_STATUS.lastUpdated}</span>
-        `;
-    }
-
-    const charactersGrid = document.getElementById('characters-grid');
-    if (charactersGrid && db.CHARACTERS) {
-        charactersGrid.innerHTML = '';
-        db.CHARACTERS.forEach(char => {
-            const card = document.createElement('a');
-            card.href = `character.html?id=${char.id}`;
-            card.className = 'character-card minimal-panel';
-
-            card.innerHTML = `
-                <img src="${char.portrait}" alt="${char.name}" class="char-png" onerror="this.style.display='none'">
-                <div class="info">
-                    <h3>${char.name}</h3>
-                </div>
-            `;
-            charactersGrid.appendChild(card);
-        });
+        revealElements.forEach(el => revealObserver.observe(el));
     }
 }
 

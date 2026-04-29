@@ -1498,3 +1498,288 @@ body.dark-mode .lore-popover {
     font-weight: 700;
     letter-spacing: -0.02em;
 }
+
+/* =========================================
+   SGLM-O PREMIUM HOME V2 (O CÓDICE)
+   ========================================= */
+
+/* Hero Premium */
+.hero-premium {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    background-color: #050505; /* Fundo extremamente escuro */
+}
+
+/* Fundo da Aurora no Hero */
+.hero-bg-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150vw;
+    height: 150vw;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(227, 42, 115, 0.15) 0%, rgba(5, 5, 5, 1) 70%);
+    z-index: 1;
+    pointer-events: none;
+    animation: pulseGlow 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulseGlow {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    max-width: 800px;
+}
+
+.hero-title {
+    font-family: 'EuropaGroteskSH', sans-serif;
+    font-weight: 700;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: #FFFFFF;
+    letter-spacing: -0.04em; /* Impactante */
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.hero-subtitle {
+    font-family: 'EuropaGroteskSH', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.6); /* text-muted elegante */
+    letter-spacing: 0.02em;
+    margin-bottom: 3rem;
+}
+
+/* Premium Button (CTA) */
+.btn-premium {
+    background-color: var(--color-surface);
+    color: var(--color-text-main);
+    padding: 1.2rem 3rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 rgba(227, 42, 115, 0);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/* O "Molho" do Hover */
+.btn-premium:hover {
+    transform: scale(1.05);
+    background-color: #FFFFFF;
+    color: var(--color-primary);
+    box-shadow: 0 0 30px rgba(227, 42, 115, 0.4);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 1.5rem;
+    animation: bounceScroll 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes bounceScroll {
+    0%, 100% { transform: translate(-50%, 0); opacity: 0.3; }
+    50% { transform: translate(-50%, 10px); opacity: 1; }
+}
+
+
+/* Marquee Premium */
+.marquee-premium {
+    width: 100%;
+    overflow: hidden;
+    padding: 1.5rem 0;
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    white-space: nowrap;
+}
+
+.marquee-content {
+    display: flex;
+    animation: marqueeScroll 20s linear infinite;
+}
+
+.marquee-content span {
+    font-family: 'EuropaGroteskSH', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.2em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3); /* Outline text */
+    padding: 0 2rem;
+}
+
+@keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-33.33%); } /* Assuming 3 identical spans */
+}
+
+
+/* Bento Grid Modern */
+.bento-container {
+    padding: 6rem 2rem;
+}
+
+.bento-grid-modern {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 250px;
+    gap: 1.5rem;
+}
+
+.bento-card {
+    border-radius: 24px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.bento-large { grid-column: span 12; grid-row: span 2; }
+.bento-medium { grid-column: span 6; grid-row: span 1; }
+
+@media (max-width: 768px) {
+    .bento-medium { grid-column: span 12; }
+    .bento-large { grid-row: span 1; }
+}
+
+/* Glassmorphism */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.light-mode .glass-panel {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+body.light-mode .marquee-content span {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
+}
+
+.glass-panel:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(227, 42, 115, 0.2);
+}
+body.light-mode .glass-panel:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(227, 42, 115, 0.2);
+}
+
+.bento-inner {
+    z-index: 2;
+}
+
+.bento-card i {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: auto;
+    display: block;
+    padding-bottom: 2rem;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.bento-card:hover i {
+    opacity: 1;
+}
+
+.bento-card h3 {
+    font-family: 'EuropaGroteskSH', sans-serif;
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: var(--color-text-main);
+    margin-bottom: 0.5rem;
+}
+
+.bento-card p {
+    font-family: 'EuropaGroteskSH', sans-serif;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+}
+
+/* System Stats Premium */
+.system-stats-premium {
+    padding: 4rem 2rem 8rem 2rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-family: 'EuropaGroteskSH', sans-serif;
+    font-weight: 700;
+    font-size: clamp(3rem, 5vw, 5rem);
+    color: var(--color-text-main);
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.stat-label {
+    font-family: 'EuropaGroteskSH', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+}
+
+/* Scroll Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Garantir que o header sobreponha a hero section perfeitamente se estiver no topo */
+body.dark-mode .hero-premium h1, body.dark-mode .hero-premium p {
+    /* Já estilizado inline ou herda, apenas para segurança caso haja overrides globais */
+}
