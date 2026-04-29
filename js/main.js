@@ -263,8 +263,7 @@ function renderHomeView(db) {
     if (statsContainer) {
         const numEntities = db.CHARACTERS ? db.CHARACTERS.length : 0;
         const numSeasons = db.SEASONS ? db.SEASONS.length : 0;
-        // Simple fallback since galleries might be spread or dynamically loaded later, let's use a flat hardcoded 12 for the demo if none.
-        const numMídias = 12;
+        const numMídias = db.PHOTOS ? Object.values(db.PHOTOS).reduce((sum, albumPhotos) => sum + (Array.isArray(albumPhotos) ? albumPhotos.length : 0), 0) : 0;
 
         statsContainer.innerHTML = `
             <div class="stat-item">
@@ -448,10 +447,29 @@ function renderMangaView(db) {
     const container = document.getElementById('manga-container');
     if (container) {
         container.innerHTML = '';
+
+        let observer = null;
+        if ('IntersectionObserver' in window) {
+            observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const nextIndex = parseInt(img.dataset.index) + 1;
+                        if (nextIndex < season.chapterPaths.length) {
+                            const preloadImg = new Image();
+                            preloadImg.src = season.chapterPaths[nextIndex];
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            }, { rootMargin: '0px 0px 500px 0px' });
+        }
+
         season.chapterPaths.forEach((path, index) => {
             const img = document.createElement('img');
             img.src = path;
             img.className = 'manga-page';
+            img.dataset.index = index;
             img.onerror = function() {
                 this.onerror = null;
                 this.src = ''; 
@@ -465,8 +483,32 @@ function renderMangaView(db) {
                 this.style.borderBottom = '1px solid var(--color-border)';
             };
             container.appendChild(img);
+            if (observer) {
+                observer.observe(img);
+            }
         });
     }
+
+    // Scroll progress & Immersive header logic
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+        // Progress Bar
+        const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollTotal > 0 ? (window.scrollY / scrollTotal) * 100 : 0;
+        const progressBar = document.getElementById('reading-progress');
+        if (progressBar) progressBar.style.width = progress + '%';
+
+        // Headroom hide/show logic
+        const header = document.querySelector('.global-header');
+        if (header) {
+            if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                header.classList.add('headroom-hidden');
+            } else {
+                header.classList.remove('headroom-hidden');
+            }
+        }
+        lastScrollY = window.scrollY;
+    });
 }
 
 function renderPersonagensView(db) {

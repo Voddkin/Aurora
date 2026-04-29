@@ -32,7 +32,21 @@ body::-webkit-scrollbar {
 body {
     -ms-overflow-style: none;
     scrollbar-width: none;
-    overflow: hidden; /* Lock scrolling on main page body */
+}
+
+@media (min-width: 1025px) {
+    body {
+        overflow: hidden; /* Lock scrolling on main page body ONLY for desktop */
+    }
+}
+
+@media (max-width: 1024px) {
+    .personagens-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
 }
 
 .universe-section {

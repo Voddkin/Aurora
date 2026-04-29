@@ -98,6 +98,22 @@ p {
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.global-header.headroom-hidden {
+    transform: translateY(-100%);
+}
+
+#reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--color-primary);
+    z-index: 100000;
+    width: 0%;
+    transition: width 0.1s ease;
 }
 
 .global-header .logo {
@@ -1635,7 +1651,7 @@ body.dark-mode .lore-popover {
 
 @keyframes marqueeScroll {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-33.33%); } /* Assuming 3 identical spans */
+    100% { transform: translateX(calc(-100% / 3)); } /* Assuming 3 identical spans */
 }
 
 
